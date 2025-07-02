@@ -1,0 +1,909 @@
+{
+    "openapi": "3.0.0",
+    "paths": {
+        "/auth/login": {
+            "post": {
+                "operationId": "AuthController_login",
+                "summary": "Realizar login no sistema",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "auth"
+                ]
+            }
+        },
+        "/users": {
+            "post": {
+                "operationId": "UsersController_create",
+                "summary": "Criar novo usuário (apenas Admin e Superuser)",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateUserDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "users"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "get": {
+                "operationId": "UsersController_findAll",
+                "summary": "Listar todos os usuários",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "users"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/users/{id}": {
+            "get": {
+                "operationId": "UsersController_findOne",
+                "summary": "Buscar usuário por ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "users"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "patch": {
+                "operationId": "UsersController_update",
+                "summary": "Atualizar usuário",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateUserDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "users"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "delete": {
+                "operationId": "UsersController_remove",
+                "summary": "Desativar usuário",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "users"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/permissions/grant": {
+            "post": {
+                "operationId": "PermissionsController_grantPermission",
+                "summary": "Conceder permissão a um usuário",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/GrantPermissionDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "permissions"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/permissions/revoke/{userId}/{moduleType}": {
+            "delete": {
+                "operationId": "PermissionsController_revokePermission",
+                "summary": "Revogar permissão de um usuário",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "moduleType",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "permissions"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/permissions/user/{userId}": {
+            "get": {
+                "operationId": "PermissionsController_getUserPermissions",
+                "summary": "Listar permissões de um usuário",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "permissions"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/permissions": {
+            "get": {
+                "operationId": "PermissionsController_listAllPermissions",
+                "summary": "Listar todas as permissões",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "permissions"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/profile": {
+            "get": {
+                "operationId": "ProfileController_getProfile",
+                "summary": "Obter perfil do usuário logado",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "profile"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "patch": {
+                "operationId": "ProfileController_updateProfile",
+                "summary": "Atualizar perfil do usuário logado",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateProfileDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "profile"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/financial/dashboard": {
+            "get": {
+                "operationId": "FinancialController_getDashboard",
+                "summary": "Obter dashboard financeiro",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "financial"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/financial/transactions": {
+            "get": {
+                "operationId": "FinancialController_getTransactions",
+                "summary": "Listar transações financeiras",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "financial"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/reports/users": {
+            "get": {
+                "operationId": "ReportsController_getUsersReport",
+                "summary": "Relatório de usuários",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "reports"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/reports/access": {
+            "get": {
+                "operationId": "ReportsController_getAccessReport",
+                "summary": "Relatório de acessos",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "reports"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/reports/permissions": {
+            "get": {
+                "operationId": "ReportsController_getPermissionsReport",
+                "summary": "Relatório de permissões",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "reports"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/products": {
+            "post": {
+                "operationId": "ProductsController_create",
+                "summary": "Criar novo produto",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateProductDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "products"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "get": {
+                "operationId": "ProductsController_findAll",
+                "summary": "Listar todos os produtos",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "products"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/products/categories": {
+            "get": {
+                "operationId": "ProductsController_getCategories",
+                "summary": "Listar categorias de produtos",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "products"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/products/{id}": {
+            "get": {
+                "operationId": "ProductsController_findOne",
+                "summary": "Buscar produto por ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "products"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "patch": {
+                "operationId": "ProductsController_update",
+                "summary": "Atualizar produto",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateProductDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "products"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "delete": {
+                "operationId": "ProductsController_remove",
+                "summary": "Remover produto",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "products"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/access-logs": {
+            "get": {
+                "operationId": "AccessLogController_findAll",
+                "summary": "Listar todos os logs de acesso (paginado)",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "required": false,
+                        "in": "query",
+                        "schema": {
+                            "example": 1,
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "required": false,
+                        "in": "query",
+                        "schema": {
+                            "example": 50,
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "access-logs"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/access-logs/user": {
+            "get": {
+                "operationId": "AccessLogController_findByCurrentUser",
+                "summary": "Listar logs de acesso do usuário logado",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "access-logs"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/access-logs/user/{userId}": {
+            "get": {
+                "operationId": "AccessLogController_findByUser",
+                "summary": "Listar logs de acesso por usuário específico",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "access-logs"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/access-logs/statistics": {
+            "get": {
+                "operationId": "AccessLogController_getStatistics",
+                "summary": "Obter estatísticas de acesso",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "access-logs"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        }
+    },
+    "info": {
+        "title": "Sistema de Controle de Acesso",
+        "description": "API para gerenciamento de permissões e acesso a módulos",
+        "version": "1.0",
+        "contact": {}
+    },
+    "tags": [],
+    "servers": [],
+    "components": {
+        "securitySchemes": {
+            "bearer": {
+                "scheme": "bearer",
+                "bearerFormat": "JWT",
+                "type": "http"
+            }
+        },
+        "schemas": {
+            "LoginDto": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "example": "superuser@sistema.com"
+                    },
+                    "password": {
+                        "type": "string",
+                        "example": "SuperUser123!"
+                    }
+                },
+                "required": [
+                    "email",
+                    "password"
+                ]
+            },
+            "CreateUserDto": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "example": "user@example.com"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "João Silva"
+                    },
+                    "password": {
+                        "type": "string",
+                        "example": "password123",
+                        "minLength": 6
+                    },
+                    "role": {
+                        "type": "string",
+                        "enum": [
+                            "SUPERUSER",
+                            "ADMIN",
+                            "USER"
+                        ],
+                        "example": "USER",
+                        "description": "Papel do usuário no sistema"
+                    }
+                },
+                "required": [
+                    "email",
+                    "name",
+                    "password",
+                    "role"
+                ]
+            },
+            "UpdateUserDto": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "example": "user@example.com"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "João Silva"
+                    },
+                    "password": {
+                        "type": "string",
+                        "example": "newpassword123",
+                        "minLength": 6
+                    },
+                    "role": {
+                        "type": "string",
+                        "enum": [
+                            "SUPERUSER",
+                            "ADMIN",
+                            "USER"
+                        ],
+                        "description": "Papel do usuário no sistema"
+                    },
+                    "isActive": {
+                        "type": "boolean",
+                        "example": true
+                    }
+                }
+            },
+            "GrantPermissionDto": {
+                "type": "object",
+                "properties": {
+                    "userId": {
+                        "type": "string",
+                        "example": "user-id-here"
+                    },
+                    "moduleType": {
+                        "type": "string",
+                        "enum": [
+                            "USER_MANAGEMENT",
+                            "PROFILE",
+                            "FINANCIAL",
+                            "REPORTS",
+                            "PRODUCTS"
+                        ],
+                        "example": "FINANCIAL",
+                        "description": "Tipo do módulo para conceder permissão"
+                    }
+                },
+                "required": [
+                    "userId",
+                    "moduleType"
+                ]
+            },
+            "UpdateProfileDto": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "example": "user@example.com"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "João Silva"
+                    },
+                    "password": {
+                        "type": "string",
+                        "example": "newpassword123",
+                        "minLength": 6
+                    }
+                }
+            },
+            "CreateProductDto": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "Smartphone XYZ"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Smartphone com 128GB de armazenamento"
+                    },
+                    "price": {
+                        "type": "number",
+                        "example": 899.99
+                    },
+                    "category": {
+                        "type": "string",
+                        "example": "Eletrônicos"
+                    },
+                    "stock": {
+                        "type": "number",
+                        "example": 100
+                    }
+                },
+                "required": [
+                    "name",
+                    "description",
+                    "price",
+                    "category",
+                    "stock"
+                ]
+            },
+            "UpdateProductDto": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "Smartphone XYZ"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Smartphone com 128GB de armazenamento"
+                    },
+                    "price": {
+                        "type": "number",
+                        "example": 899.99
+                    },
+                    "category": {
+                        "type": "string",
+                        "example": "Eletrônicos"
+                    },
+                    "stock": {
+                        "type": "number",
+                        "example": 100
+                    },
+                    "isActive": {
+                        "type": "boolean",
+                        "example": true
+                    }
+                }
+            }
+        }
+    }
+}
